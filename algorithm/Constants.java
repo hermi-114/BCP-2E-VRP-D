@@ -1,6 +1,8 @@
 package algorithm;
 
 public class Constants {
+
+    public static int TOTAL_CUSTOMERS;
     
     // ======= FLEET PARAMETER ========
     public static final int TOTAL_TRUCKS = -1;
@@ -16,5 +18,8 @@ public class Constants {
     public static final double SPINNING_BLADE_AREA = -1; // ζ (m^2)
     public static final int DRONE_ROTOR_NUMBER = 4; // cái
     public static final double DRONE_BATTERY_CAPACITY = -1; // B_c (Watt-hours)
+
+    // ====== PENALTY ======
+    public static double PENALTY_DEMO = -1;
 
 }

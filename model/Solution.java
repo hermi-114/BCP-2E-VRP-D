@@ -6,17 +6,24 @@ import java.util.List;
 public class Solution {
     public static List<Integer> truckJourney;
     public static List<List<DroneSchedule>> droneJourney;
+    public static boolean isFeasible;
 
     public Solution() {
         truckJourney = new ArrayList<>();
         droneJourney = new ArrayList<>();
+        isFeasible = false;
     }
 
 
     // ====== EXAMPLE OF A SOLUTION ======
     // 0[()] - 2[(1 - 3)] - 4[(10)(11)] - 0[()] - 6[(5)] - 8[()] - 0[()] - 9[(7)] - 0[()] - 
 
-    public String getInfo() {
+    public String getDetail() {
+
+        if(!isFeasible) {
+            return "Infeasible solution";
+        }
+
         StringBuilder sb = new StringBuilder();
 
         for(int i : truckJourney) {
@@ -36,6 +43,6 @@ public class Solution {
 
     @Override
     public String toString() {
-        return getInfo();
+        return getDetail();
     }
 }

@@ -4,7 +4,7 @@ import util.DataLoader;
 
 public class Constraint {
     // Appendix A - Drone reachable neighbourhood
-    // ===== Power consumption = (W + m + q)^(3/2) × sqrt( π² / (2 × ρ × ζ) ) =====
+    // ===== Power consumption = (W + m + q)^(3/2) × sqrt( g^3 / (2 × ρ × ζ × h) ) =====
     public static boolean droneEnergy(int src, int dest, double demand) {
 
         if(demand >= Constants.DRONE_MAX_PAYLOAD) {

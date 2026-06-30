@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
-    public static List<Integer> truckJourney;
-    public static List<List<DroneSchedule>> droneJourney;
-    public static boolean isFeasible;
+    public List<Integer> truckJourney;
+    public List<List<DroneSchedule>> droneJourney;
+    public boolean isFeasible;
 
     public Solution() {
         truckJourney = new ArrayList<>();

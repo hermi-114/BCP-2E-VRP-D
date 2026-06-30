@@ -5,9 +5,10 @@ public class Constants {
     public static int TOTAL_CUSTOMERS;
     
     // ======= FLEET PARAMETER ========
-    public static final int TOTAL_TRUCKS = -1;
-    public static final int TOTAL_DRONES = -1;
-    public static final int MAX_DRONES_PER_TRUCK = -1;
+    // ===== MAYBE NOT SELF CONFIGURATION - DECIDE FROM BRANCHING IN MASTER PROBLEM =====
+    public static int TOTAL_TRUCKS = -1;
+    public static int TOTAL_DRONES = -1;
+    public static int MAX_DRONES_PER_TRUCK = -1;
 
     // ====== DRONE REACHABLE NEIGHBOURHOOD ======
     public static final double DRONE_WEIGHT = -1; // W

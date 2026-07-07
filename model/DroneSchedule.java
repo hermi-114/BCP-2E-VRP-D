@@ -1,41 +1,32 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
+
 public class DroneSchedule {
-    public int droneId;
-    public List<Integer> customerServed;
-    public int makespan;
+    public List<List<Integer>> sequences;
+    public double makespan;
+    public double maxStartingTime;
 
-    public DroneSchedule(int droneId) {
-        this.droneId = droneId;
-        this.customerServed = new ArrayList<>();
-        this.makespan = 0;
+    
+    public DroneSchedule(List<List<Integer>> sequences, double makespan, double maxStartingTime) {
+        this.sequences = sequences;
+        this.makespan = makespan;
+        this.maxStartingTime = maxStartingTime;
     }
 
-    public void addCustomer(int customerId, int serviceTime) {
-        customerServed.add(customerId);
-        makespan += serviceTime;
+    public boolean dominates(DroneSchedule other) {
+        boolean betterOrEqual = (this.makespan <= other.makespan) && 
+                                (this.maxStartingTime >= other.maxStartingTime);
+                                
+        boolean strictlyBetter = (this.makespan < other.makespan) || 
+                                 (this.maxStartingTime > other.maxStartingTime);
+                                 
+        return betterOrEqual && strictlyBetter;
     }
 
-    public List<Integer> getDroneSchedule(int id) {
-        return customerServed;
-    }
-
-    public String getInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("(");
-        int n = customerServed.size();
-        for(int i = 0; i < n-1; i++) {
-            sb.append(customerServed.get(i)).append(" - ");
-        }
-        sb.append(customerServed.get(n-1)).append(")");
-
-        return sb.toString();
-    }
-    @Override
-    public String toString() {
-        return getInfo();
+    public boolean equals(DroneSchedule other) {
+        return  this.makespan == other.makespan &&
+                this.maxStartingTime == other.maxStartingTime;
     }
 }

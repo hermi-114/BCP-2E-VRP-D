@@ -29,4 +29,21 @@ public class DroneSchedule {
         return  this.makespan == other.makespan &&
                 this.maxStartingTime == other.maxStartingTime;
     }
+
+    public String getInfo() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("DroneSchedule: [");
+
+        sb.append("numDrones: ").append(sequences.size())
+        .append(", makespan: ").append(String.format("%.2f", makespan))
+        .append(", maxStartingTime: ").append(String.format("%.2f", maxStartingTime));
+
+        sb.append("]");
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getInfo();
+    }
 }

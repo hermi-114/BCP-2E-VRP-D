@@ -2,12 +2,12 @@
 import algorithm.Constants;
 import algorithm.ParetoFront;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import model.DroneSchedule;
 import util.DataLoader;
-import util.drone_sched.GenerateNeighbourhood;
-import util.drone_sched.OneBasedDroneSchedule;
+import util.drone_sched.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,24 +27,22 @@ public class Main {
         int customerSize = Constants.TOTAL_CUSTOMERS;
 
         int maxDrones = Constants.MAX_DRONES_PER_TRUCK;
-        ParetoFront[] paretoFront = new ParetoFront[maxDrones];
-
-        for(int i = 0; i < maxDrones; i++) {
-            paretoFront[i] = new ParetoFront();
-        }
-
+        Map<Integer, List<ParetoFront>> paretoMap = new HashMap<>();
+        
+        
         for(int node = 1; node < customerSize; node++) {
+            List<ParetoFront> paretos = new ArrayList<>();
 
             List<Integer> neighbours = neibourhoodMap.get(node);
             List<List<Integer>> baseCase = OneBasedDroneSchedule.getOneBasedSequences(neighbours); // get every subsets K in neighbourhood
             
             List<DroneSchedule> schedules = new ArrayList<>();
             
-            for(List<Integer> subSequence : baseCase) {
+            for(List<Integer> subset : baseCase) {
                 double makespan = 0;
                 double maxStartingTime = 1e6;
 
-                for(int dest : subSequence) {
+                for(int dest : subset) {
                     // System.out.println(DataLoader.getNode(dest).deadline);
 
                     double deadline = DataLoader.getNode(dest).deadline;
@@ -62,64 +60,61 @@ public class Main {
                 }
 
                 List<List<Integer>> sequences = new ArrayList<>();
-                sequences.add(subSequence);
+                sequences.add(subset);
                 schedules.add(new DroneSchedule(sequences, makespan, maxStartingTime));
                 
             }
 
-            
-
-            for(var schedule : schedules) {
-                paretoFront[0].tryAddSchedule(schedule);
+            for(DroneSchedule sched : schedules) {
+                System.out.println(sched);
             }
 
+            paretos.add(new ParetoFront());
+            for(var schedule : schedules) {
+                paretos.get(0).tryAddSchedule(schedule);
+            }
+
+            // System.out.println(paretos.get(0).nonDominatedSchedules.size());
+            // System.out.println("Size: " + schedules.size());
 
 
-            // try {
-            //     for(int i = 1; i < maxDrones; i++) {
-            //     System.out.println(i);
+            try {
+                for(int total_drone_use = 2; total_drone_use <= maxDrones; total_drone_use++) {
+                    ParetoFront paretoFront = new ParetoFront();
+                    for(int numDrone_a = 1; numDrone_a <= total_drone_use/2; numDrone_a++) {
+                        int numDrone_b = total_drone_use - numDrone_a;
+                        for(var s1 : paretos.get(numDrone_a - 1).nonDominatedSchedules) {
+                            for(var s2 : paretos.get(numDrone_b - 1).nonDominatedSchedules) {
+                                DroneSchedule combined = ScheduleCombiner.combine(s1, s2);
+                                paretoFront.tryAddSchedule(combined);
+                            }
+                        }
+                    }
+                    paretos.add(paretoFront);
+                }
 
-            //     for(int j = 0; j <= i/2; j++) {
-            //         ParetoFront p1 = paretoFront[j];
-            //         ParetoFront p2 = paretoFront[i-j-1];
+                
+            } catch (OutOfMemoryError e) {
+                System.err.println("OUT OF MEMORY ERROR: " + e.getMessage());
+            }
 
-            //         List<DroneSchedule> s1s = p1.nonDominatedSchedules;
-            //         List<DroneSchedule> s2s = p2.nonDominatedSchedules;
-
-            //         for(DroneSchedule s1 : s1s) {
-            //             for(var s2 : s2s) {
-            //                 DroneSchedule combined = ScheduleCombiner.combine(s1, s2);
-            //                 if(combined != null) {
-            //                     paretoFront[i].tryAddSchedule(combined);
-            //                 }
-            //             }
-            //         }
-
-            //     }
-            // }
-            // } catch (OutOfMemoryError e) {
-            //     System.err.println("OUT OF MEMORY ERROR: " + e.getMessage());
-            // }
+            paretoMap.put(node, paretos);
         }
 
-        System.out.println("Starting print");
+        System.out.println("Starting print pareto front");
 
-        for(var pareto : paretoFront) {
-            for(var list : pareto.nonDominatedSchedules) {
-                for(var l : list.sequences) {
-                    System.out.print('{');
-                    for(var ll : l) {
-                        System.out.print(ll + ", ");
-                    }
-                    System.out.print("}, ");
+        for(int i = 1; i <= maxDrones; i++) {
+            for(var pareto : paretoMap.get(i)) {
+                for(var list : pareto.nonDominatedSchedules) {
+                    System.out.println(list.sequences);
                 }
-                System.out.println();
+    
             }
-            System.out.println();
+
         }
 
         // ===============================================
-        // -----------------  ------------------
+        // ----------------             ------------------
         // ===============================================
 
     }

@@ -1,8 +1,5 @@
 package algorithm;
 
-import java.util.List;
-import model.DroneSchedule;
-import model.Solution;
 import util.DataLoader;
 
 public class Constraint {
@@ -10,7 +7,7 @@ public class Constraint {
     // ===== Power consumption = (W + m + q)^(3/2) × sqrt( g^3 / (2 × ρ × ζ × h) ) =====
     public static boolean droneEnergy_constraint(int src, int dest, double demand) {
 
-        if (!DataLoader.getNode(src).isDroneAllowed || !DataLoader.getNode(dest).isDroneAllowed) {
+        if (!(DataLoader.getNode(src).isDroneAllowed) || !(DataLoader.getNode(dest).isDroneAllowed)) {
             return false;
         }
 
@@ -22,7 +19,7 @@ public class Constraint {
 
         double W = Constants.DRONE_WEIGHT;
         double m = Constants.DRONE_BATTERY_WEIGHT;
-        double q = demand / 4;
+        double q = demand;
 
         
         double g = Constants.GRAVITY;
@@ -42,10 +39,9 @@ public class Constraint {
         double totalEnergyJoules = energyGoJoules + energyBackJoules;
 
         // Convert Joules to Watt-hours (1 Wh = 3600 Joules)
-        double totalEnergyWh = totalEnergyJoules / 3600.0; // (1 Wh = 3600 Joules)
 
         // Final Battery Check
-        return totalEnergyWh <= Constants.DRONE_BATTERY_CAPACITY;
+        return totalEnergyJoules <= Constants.DRONE_BATTERY_CAPACITY;
     }
 
 
@@ -53,14 +49,14 @@ public class Constraint {
     // check if solution has the right property
     // truckJourney: d - * - d
     // droneJourney: 
-    public static boolean isFeasible(Solution sol) {
-        List<Integer> truckJourney = sol.truckJourney;
-        List<List<DroneSchedule>> droneJourney = sol.droneJourney;
+    // public static boolean isFeasible(Solution sol) {
+    //     List<Integer> truckJourney = sol.truckJourney;
+    //     List<List<DroneSchedule>> droneJourney = sol.droneJourney;
 
-        // TODO
-        // ....
+    //     // TODO
+    //     // ....
 
-        return true;
-    }
+    //     return true;
+    // }
 
 }

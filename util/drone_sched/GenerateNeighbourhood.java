@@ -26,12 +26,12 @@ public class GenerateNeighbourhood {
 
             neighbourhood = neighbourhood.stream()
                                 .sorted(Comparator.comparingDouble(c -> (demand * DataLoader.dist[f][c])))
-                                .limit(10)
+                                // .limit(10)
                                 .toList();
             map.put(i, neighbourhood);
         }
 
-        System.out.println(map);
+        // System.out.println(map);
 
         return map;
 

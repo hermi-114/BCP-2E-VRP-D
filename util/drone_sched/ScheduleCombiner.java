@@ -8,6 +8,16 @@ public class ScheduleCombiner {
     public static DroneSchedule combine(DroneSchedule s1, DroneSchedule s2) {
         List<List<Integer>> seq = s1.sequences;
         seq.addAll(s2.sequences);
+        
+        boolean[] checkIfExist = new boolean[102];
+        for(var s : seq) {
+            for(var ss : s) {
+                if(checkIfExist[ss]) {
+                    return null;
+                }
+                checkIfExist[ss] = true;
+            }
+        }
 
         if(seq.size() > Constants.MAX_DRONES_PER_TRUCK) {
             return null;

@@ -15,9 +15,13 @@ public class ParetoFront {
     // try add new schedule
     // check if this new schedule got dominated by any existed schedule
     // check if this new schdule dominates any existed schedule
-    public void tryAddSchedule(DroneSchedule newschedule) {
+    public void tryAddSchedule(DroneSchedule newSchedule) {
 
-        if(newschedule.maxStartingTime < 0) {
+        if(newSchedule == null) {
+            return;
+        }
+
+        if(newSchedule.maxStartingTime < 0 || newSchedule.maxStartingTime >= 1e5) {
             return;
         }
 
@@ -25,17 +29,17 @@ public class ParetoFront {
         while(it.hasNext()) {
             DroneSchedule schedule = it.next();
 
-            if(schedule.dominates(newschedule) || schedule.equals(newschedule)) {
+            if(schedule.dominates(newSchedule) || schedule.equals(newSchedule)) {
                 return;
             }
 
-            if(newschedule.dominates(schedule)) {
+            if(newSchedule.dominates(schedule)) {
                 it.remove();
             }
         }
 
-        // if new schedule survive after loop -> add to list
-        nonDominatedSchedules.add(newschedule);
+        nonDominatedSchedules.add(newSchedule); // if new schedule survive after loop
+
     }
 
     

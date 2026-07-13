@@ -97,14 +97,13 @@ public class DataLoader {
         for(int i = 0; i < counter; i++) {
             dist[i][i] = 1e6;
             Node c1 = nodes.get(i);
-            double x1 = c1.x;
-            double y1 = c1.y;
             for(int j = i + 1; j < counter; j++) {
                 Node c2 = nodes.get(j);
-                double x2 = c2.x;
-                double y2 = c2.y;
 
-                dist[i][j] = dist[j][i] = Math.sqrt( Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2) );
+                double dx = c1.x - c2.x;
+                double dy = c1.y - c2.y;
+
+                dist[i][j] = dist[j][i] = Math.sqrt(dx*dx + dy*dy);
             }
         }
 

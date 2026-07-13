@@ -29,7 +29,7 @@ public class ParetoFront {
         while(it.hasNext()) {
             DroneSchedule schedule = it.next();
 
-            if(schedule.dominates(newSchedule) || schedule.equals(newSchedule)) {
+            if(schedule.dominates(newSchedule)) {
                 return;
             }
 
@@ -38,7 +38,7 @@ public class ParetoFront {
             }
         }
 
-        nonDominatedSchedules.add(newSchedule); // if new schedule survive after loop
+        nonDominatedSchedules.add(newSchedule); // if new schedule survives after loop
 
     }
 

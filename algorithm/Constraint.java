@@ -11,14 +11,18 @@ public class Constraint {
             return false;
         }
 
-        if(demand/4 > Constants.DRONE_MAX_PAYLOAD) {
+        if(demand > Constants.DRONE_MAX_PAYLOAD) {
             return false;
         }
 
-        double distance = DataLoader.dist[src][dest] * 1000;
+        double distKm = DataLoader.dist[src][dest];
+        double distM = distKm * 1000;
+
+        double speedMps = Constants.DRONE_SPEED;
+        double timeSeconds = distM / speedMps;   
 
         double W = Constants.DRONE_WEIGHT;
-        double m = Constants.DRONE_BATTERY_WEIGHT;
+        // double m = Constants.DRONE_BATTERY_WEIGHT; // already included in drone weight
         double q = demand;
 
         
@@ -27,21 +31,16 @@ public class Constraint {
         double T = Constants.SPINNING_BLADE_AREA;
         int h = Constants.DRONE_ROTOR_NUMBER;
         
-        double behind = Math.sqrt(g*g*g / (2 * p * T * h));
+        double sqrtTerm = Math.sqrt(g*g*g / (2 * p * T * h));
 
-        double powerConsumptionGo   = Math.pow(W + m + q, 1.5) * behind;
-        double powerConsumptionBack = Math.pow(W + m + 0, 1.5) * behind;
+        double powerConsumptionGo   = Math.pow(W + q, 1.5) * sqrtTerm;
+        double powerConsumptionBack = Math.pow(W + 0, 1.5) * sqrtTerm;
 
-        double time = distance / Constants.DRONE_SPEED;
+        double energyGo   = powerConsumptionGo   * timeSeconds;
+        double energyBack = powerConsumptionBack * timeSeconds;
+        double totalEnergy = energyGo + energyBack; // Joules
 
-        double energyGoJoules   = powerConsumptionGo   * time;
-        double energyBackJoules = powerConsumptionBack * time;
-        double totalEnergyJoules = energyGoJoules + energyBackJoules;
-
-        // Convert Joules to Watt-hours (1 Wh = 3600 Joules)
-
-        // Final Battery Check
-        return totalEnergyJoules <= Constants.DRONE_BATTERY_CAPACITY;
+        return totalEnergy <= Constants.DRONE_BATTERY_CAPACITY;
     }
 
 

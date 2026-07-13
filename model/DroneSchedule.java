@@ -1,5 +1,6 @@
 package model;
 
+import algorithm.Constants;
 import java.util.List;
 
 
@@ -16,27 +17,25 @@ public class DroneSchedule {
     }
 
     public boolean dominates(DroneSchedule other) {
-        boolean betterOrEqual = (this.makespan <= other.makespan) && 
-                                (this.maxStartingTime >= other.maxStartingTime);
-                                
-        boolean strictlyBetter = (this.makespan < other.makespan) || 
-                                 (this.maxStartingTime > other.maxStartingTime);
-                                 
-        return betterOrEqual && strictlyBetter;
-    }
+        if  (   this.makespan == other.makespan
+            &&  this.maxStartingTime == other.maxStartingTime
+            &&  this.sequences.size() == other.sequences.size()
+        )
+                return false;
 
-    public boolean equals(DroneSchedule other) {
-        return  this.makespan == other.makespan &&
-                this.maxStartingTime == other.maxStartingTime;
+        double epsilon = Constants.EPSILON;
+        return (this.makespan - other.makespan <= epsilon) 
+                && (this.maxStartingTime - other.maxStartingTime >= epsilon) 
+                && this.sequences.size() >= other.sequences.size(); 
     }
 
     public String getInfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("DroneSchedule: [");
+        sb.append("DroneSchedule [");
 
         sb.append("numDrones: ").append(sequences.size())
-        .append(", makespan: ").append(String.format("%.2f", makespan))
-        .append(", maxStartingTime: ").append(String.format("%.2f", maxStartingTime));
+        .append(" | makespan: ").append(String.format("%7.2f", makespan))
+        .append(" | maxStartingTime: ").append(String.format("%7.2f", maxStartingTime));
 
         sb.append("]");
         return sb.toString();

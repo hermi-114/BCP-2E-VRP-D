@@ -1,11 +1,11 @@
-package util.drone_sched;
+package src.main.java.master.drone;
 
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import util.DataLoader;
+import src.main.java.io.DataLoader;
 
 public class OneBasedDroneSchedule {
     public static List<List<Integer>> getOneBasedSequences(List<Integer> sequence) {

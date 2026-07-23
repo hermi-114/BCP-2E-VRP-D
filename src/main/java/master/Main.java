@@ -1,13 +1,18 @@
+package src.main.java.master;
 
-import algorithm.Constants;
-import algorithm.ParetoFront;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.DroneSchedule;
-import util.DataLoader;
-import util.drone_sched.*;
+
+import src.main.java.config.Constants;
+import src.main.java.io.DataLoader;
+import src.main.java.master.drone.GenerateNeighbourhood;
+import src.main.java.master.drone.OneBasedDroneSchedule;
+import src.main.java.master.drone.ScheduleCombiner;
+import src.main.java.model.DroneSchedule;
+import src.main.java.model.ParetoFront;
 
 public class Main {
     public static void main(String[] args) {

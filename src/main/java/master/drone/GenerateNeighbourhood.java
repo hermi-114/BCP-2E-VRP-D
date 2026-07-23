@@ -1,12 +1,11 @@
-package util.drone_sched;
-import algorithm.Constants;
-import algorithm.Constraint;
+package src.main.java.master.drone;
+import src.main.java.config.Constants;
+import src.main.java.io.DataLoader;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import util.DataLoader;
 
 
 public class GenerateNeighbourhood {
@@ -19,7 +18,7 @@ public class GenerateNeighbourhood {
             double demand = DataLoader.getNode(i).demand;
             List<Integer> neighbourhood = new ArrayList<>();
             for(int j = 1; j < cusNum + 1; j++) {
-                if(Constraint.droneEnergy_constraint(i, j, demand)) {
+                if(NeighbourhoodConstraint.droneEnergy_constraint(i, j, demand)) {
                     neighbourhood.add(j);
                 }
             }

@@ -1,6 +1,5 @@
-package util;
+package src.main.java.io;
 
-import algorithm.Constants;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,7 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.Node;
+
+import src.main.java.config.Constants;
+import src.main.java.model.Node;
 
 
 public class DataLoader {

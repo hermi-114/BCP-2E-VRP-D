@@ -1,8 +1,9 @@
-package util.drone_sched;
+package src.main.java.master.drone;
 
-import algorithm.Constants;
 import java.util.List;
-import model.DroneSchedule;
+
+import src.main.java.config.Constants;
+import src.main.java.model.DroneSchedule;
 
 public class ScheduleCombiner {
     public static DroneSchedule combine(DroneSchedule s1, DroneSchedule s2) {

@@ -1,4 +1,4 @@
-package algorithm;
+package src.main.java.config;
 
 public class Constants {
 

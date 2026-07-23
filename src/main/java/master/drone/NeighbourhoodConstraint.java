@@ -1,8 +1,9 @@
-package algorithm;
+package src.main.java.master.drone;
 
-import util.DataLoader;
+import src.main.java.config.Constants;
+import src.main.java.io.DataLoader;
 
-public class Constraint {
+public class NeighbourhoodConstraint {
     // Appendix A - Drone reachable neighbourhood
     // ===== Power consumption = (W + m + q)^(3/2) × sqrt( g^3 / (2 × ρ × ζ × h) ) =====
     public static boolean droneEnergy_constraint(int src, int dest, double demand) {

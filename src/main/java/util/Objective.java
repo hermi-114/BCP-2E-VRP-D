@@ -1,9 +1,9 @@
-package algorithm;
+package src.main.java.util;
 
 import java.util.List;
-import model.DroneSchedule;
-import model.Solution;
-import util.DataLoader;
+import src.main.java.model.DroneSchedule;
+import src.main.java.model.Solution;
+import src.main.java.io.DataLoader;
 
 public class Objective {
 

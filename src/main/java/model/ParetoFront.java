@@ -1,9 +1,8 @@
-package algorithm;
+package src.main.java.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import model.DroneSchedule;
 
 public class ParetoFront {
     public List<DroneSchedule> nonDominatedSchedules;
